@@ -12,11 +12,144 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <link href="css/style.css" rel="stylesheet" />
 
     <title>Discussion Forum</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <div class="my-banner">Awesome Discussion Forum</div>
+
+    <!-- top menus -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item modal-menus-pre-auth">
+              <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-signin-form">Sign In</button>
+            </li>
+            <li class="nav-item modal-menus-post-auth">
+              <button id="menu-home" class="btn btn-outline-primary">Home</button>
+            </li>
+            <li class="nav-item modal-menus-post-auth">
+              <button id="menu-about" class="btn btn-outline-primary">About</button>
+            </li>
+            <li class="nav-item modal-menus-post-auth">
+              <button id='menu-signout' class="btn btn-outline-danger">Sign Out</button>
+            </li>
+          </ul>
+          <div class ="modal-menus-post-auth">
+            <form class="d-flex">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Modal: Create new thread form-->
+    <div class="modal fade" id="modal-create-thread" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-create-thread-label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-create-thread-label">Create A New Thread</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="form-create-thread">
+              <div>
+                <input type="text" name="title" placeholder="title of the thread" />
+              </div>
+              <div> 
+                <input type="text" name="keywords" placeholder="search keys separated by a blank" />
+              </div>
+              <div>
+                <textarea name="content" cols="50" rows="5" placeholder="Enter content of the thread"></textarea>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-outline-primary">Create</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: info box-->
+    <div class="modal fade" id="modal-infobox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-infobox-title"></h5>
+          </div>
+          <div id="modal-infobox-body" class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Sign-In -->
+    <div
+      class="modal fade"
+      id="modal-signin-form"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="modal-signin-form"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-signin-form">Sign In, Please</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="form-signin" method="post">
+              <div>
+                <input type="email" name="email" placeholder="email address"> 
+              </div>
+              <div>
+                <input type ="password" name="password" placeholder="password">
+              </div>
+              <div>
+                <button class="btn btn-outline-primary" type="submit">Sign In</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="root" class="bg-light p-5 m-3">
+      Hello World!
+    </div>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.7.0/firebase-app.js"></script>

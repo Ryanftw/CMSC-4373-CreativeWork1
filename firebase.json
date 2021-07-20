@@ -1,11 +1,8 @@
 {
   "hosting": {
+    "site": "a1p1jfidkgldrsl",
     "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
