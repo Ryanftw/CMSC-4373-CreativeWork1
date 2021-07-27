@@ -3,6 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
@@ -12,7 +13,7 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
 
     <title>Discussion Forum</title>
   </head>
@@ -50,8 +51,9 @@
             </li>
           </ul>
           <div class ="modal-menus-post-auth">
-            <form class="d-flex">
+            <form id="form-search" class="d-flex">
               <input
+                name="searchKeys"
                 class="form-control me-2"
                 type="search"
                 placeholder="Search"
@@ -78,12 +80,15 @@
             <form id="form-create-thread">
               <div>
                 <input type="text" name="title" placeholder="title of the thread" />
+                <p class="form-create-thread-error" id="form-create-thread-error-title"></p>
               </div>
               <div> 
                 <input type="text" name="keywords" placeholder="search keys separated by a blank" />
+                <p class="form-create-thread-error" id="form-create-thread-error-keywords"></p>
               </div>
               <div>
                 <textarea name="content" cols="50" rows="5" placeholder="Enter content of the thread"></textarea>
+                <p class="form-create-thread-error" id="form-create-thread-error-content"></p>
               </div>
               <div>
                 <button type="submit" class="btn btn-outline-primary">Create</button>
@@ -142,14 +147,56 @@
               <div>
                 <button class="btn btn-outline-primary" type="submit">Sign In</button>
               </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="root" class="bg-light p-5 m-3">
-      Hello World!
+    <!-- Modal: Create Account -->
+    <div class="modal fade" id="modal-create-account" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-create-account-label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-create-account-label">Create Account</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="form-create-account" method="post">
+              <div>
+                <input type="email" name="email" placeholder="email address">
+                <p id="create-account-error-email" class="create-account-error"></p>
+              </div>
+              <div>
+                <input type="password" name="password" placeholder="password">
+                <p id="create-account-error-password" class="create-account-error"></p>
+              </div>
+              <div>
+                <input type="password" name="passwordConfirm" placeholder="confirm password">
+                <p id="create-account-error-passwordConfirm" class="create-account-error"></p>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-outline-primary">Create</button>
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div id="root" class="bg-light p-5 m-3 modal-menus-post-auth">
+    </div>
+    <div class ="modal-menus-pre-auth">
+      <h1>Welcome to Awesome Discussion Forum</h1>
+      Please sign in to do: 
+      <ul>
+        <li>to create a new thread</li>
+        <li>to browse threads</li>
+        <li>to reply to threads</li>
+      </ul>
+      No account yet? 
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create-account">Create New Account</button>
+    </div>
+     
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.7.0/firebase-app.js"></script>
@@ -164,7 +211,6 @@
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
     <script type="module" src="app.js"></script>
-
     <!-- Bootstrap Bundle with Popper -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

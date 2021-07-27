@@ -39,8 +39,8 @@ export function addEventListeners() {
       for (let i = 0; i < elements.length; i++)
         elements[i].style.display = "block";
       const pathname = window.location.pathname;
-      const href = window.location.href;
-      Route.routing(pathname, href);
+      const hash = window.location.hash;
+      Route.routing(pathname, hash);
     } else {
       // sign out
       currentUser = null;
@@ -51,7 +51,49 @@ export function addEventListeners() {
       for (let i = 0; i < elements.length; i++)
         elements[i].style.display = "none";
       history.pushState(null, null, Route.routePath.HOME);
-      Element.root.innerHTML = "<h1>Signed Out</h1>";
+      // Element.root.innerHTML = "<h1>Signed Out</h1>";
+    }
+  });
+  Element.formCreateAccount.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const passwordConfirm = e.target.passwordConfirm.value;
+
+    // reset error messages
+    Element.formCreateAccountError.email.innerHTML = "";
+    Element.formCreateAccountError.password.innerHTML = "";
+    Element.formCreateAccountError.passwordConfirm.innerHTML = "";
+
+    let valid = true;
+    // email: HTML validation, xxx@uco.edu
+
+    if (password.length < 6) {
+      valid = false;
+      Element.formCreateAccountError.password.innerHTML = "At least 6 chars";
+    }
+    if (passwordConfirm != password) {
+      valid = false;
+      Element.formCreateAccountError.passwordConfirm.innerHTML =
+        "Passwords do not match";
+    }
+
+    if (!valid) return;
+
+    try {
+      await FirebaseController.createAccount(email, password);
+      Util.info(
+        "Account Created",
+        "You are now signed in",
+        Element.modalCreateAccount
+      );
+    } catch (e) {
+      if (Constant.DEV) console.log(e);
+      Util.info(
+        "Failed to Create Account",
+        JSON.stringify(e),
+        Element.modalCreateAccount
+      );
     }
   });
 }
