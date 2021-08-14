@@ -171,7 +171,7 @@ function buildThreadView(thread) {
         </td>
         <td>${thread.title}</td>
         <td>${
-          !thread.keywordsArray || !Array.isArray(thread.keyWordsArray)
+          !thread.keywordsArray || !Array.isArray(thread.keywordsArray)
             ? ""
             : thread.keywordsArray.join(" ")
         }</td>
