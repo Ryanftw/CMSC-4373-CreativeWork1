@@ -15,11 +15,19 @@ export const formCreateAccountError = {
 export const formSearch = document.getElementById("form-search");
 export const formSignin = document.getElementById("form-signin");
 export const formCreateThread = document.getElementById("form-create-thread");
+export const formEditThreadError = {
+  title: document.getElementById("form-edit-thread-error-title"),
+  keywords: document.getElementById("form-edit-thread-error-keywords"),
+  content: document.getElementById("form-edit-thread-error-content"),
+};
 export const formCreateThreadError = {
   title: document.getElementById("form-create-thread-error-title"),
   keywords: document.getElementById("form-create-thread-error-keywords"),
   content: document.getElementById("form-create-thread-error-content"),
 };
+
+export const formEditReply = document.getElementById("form-edit-reply");
+export const formEditThread = document.getElementById("form-edit-thread");
 
 // main content root
 export const root = document.getElementById("root");
@@ -44,4 +52,12 @@ export const modalCreateThread = new bootstrap.Modal(
 
 export const modalCreateAccount = new bootstrap.Modal(
   document.getElementById("modal-create-account")
+);
+
+export const modalEditReply = new bootstrap.Modal(
+  document.getElementById("modal-edit-reply")
+);
+
+export const modalEditThread = new bootstrap.Modal(
+  document.getElementById("modal-edit-thread")
 );

@@ -68,6 +68,28 @@
       </div>
     </nav>
 
+    <!-- Modal: Edit Reply -->
+    <div class="modal fade" id="modal-edit-reply" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-edit-reply-label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-edit-reply-label">Edit Reply</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="form-edit-reply">
+              <div>
+                Reply:<textarea name="reply"></textarea>
+              </div>
+              <div> 
+                <button type="submit" class="btn btn-outline-primary">Update</button>
+              </div>
+            </form> 
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Modal: Create new thread form-->
     <div class="modal fade" id="modal-create-thread" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-create-thread-label" aria-hidden="true">
       <div class="modal-dialog">
@@ -92,6 +114,37 @@
               </div>
               <div>
                 <button type="submit" class="btn btn-outline-primary">Create</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Edit thread form-->
+    <div class="modal fade" id="modal-edit-thread" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-edit-thread-label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-edit-thread-label">Edit Thread</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="form-edit-thread">
+              <div>
+                Edit Title<input type="text" name="title"/>
+                <p class="form-edit-thread-error" id="form-edit-thread-error-title"></p>
+              </div>
+              <div> 
+                Edit Keywords<input type="text" name="keywords"/>
+                <p class="form-edit-thread-error" id="form-edit-thread-error-keywords"></p>
+              </div>
+              <div>
+                Edit Content<textarea name="content" cols="50" rows="5"></textarea>
+                <p class="form-edit-thread-error" id="form-edit-thread-error-content"></p>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-outline-primary">Update Thread</button>
               </div>
             </form>
           </div>

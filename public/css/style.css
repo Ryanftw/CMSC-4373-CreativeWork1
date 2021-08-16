@@ -35,6 +35,32 @@ textarea {
   color: red;
 }
 
+.form-edit-thread-error {
+  color: red;
+}
+
 .create-account-error {
   color: red;
+}
+
+.thread-view-form {
+  padding-top: 0rem;
+}
+
+.form-edit-thread {
+  padding-top: 1rem;
+}
+
+.form-delete-thread {
+  padding-top: 1rem;
+}
+
+.form-edit-reply {
+  padding-left: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.form-delete-reply {
+  padding-left: 0.5rem;
+  padding-bottom: 0.2rem;
 }

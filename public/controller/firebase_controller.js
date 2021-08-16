@@ -90,3 +90,60 @@ export async function searchThreads(keywordsArray) {
 export async function createAccount(email, password) {
   await firebase.auth().createUserWithEmailAndPassword(email, password);
 }
+
+export async function getReplyById(docId) {
+  const ref = await firebase
+    .firestore()
+    .collection(Constant.collectionNames.REPLIES)
+    .doc(docId)
+    .get();
+  if (!ref.exists) return null;
+  const r = new Reply(ref.data());
+  r.docId = docId;
+  return r;
+}
+
+export async function updateReply(reply) {
+  await firebase
+    .firestore()
+    .collection(Constant.collectionNames.REPLIES)
+    .doc(reply.docId)
+    .update({ content: reply.content });
+}
+
+export async function deleteReply(docId) {
+  await firebase
+    .firestore()
+    .collection(Constant.collectionNames.REPLIES)
+    .doc(docId)
+    .delete();
+}
+
+export async function updateThread(thread) {
+  await firebase
+    .firestore()
+    .collection(Constant.collectionNames.THREADS)
+    .doc(thread.docId)
+    .update({
+      content: thread.content,
+      title: thread.title,
+      keywordsArray: thread.keywordsArray,
+    });
+}
+
+export async function deleteThread(threadId) {
+  const snapShot = await firebase
+    .firestore()
+    .collection(Constant.collectionNames.REPLIES)
+    .where("threadId", "==", threadId)
+    .orderBy("timestamp")
+    .get();
+  snapShot.forEach(async (doc) => {
+    await deleteReply(doc.id);
+  });
+  await firebase
+    .firestore()
+    .collection(Constant.collectionNames.THREADS)
+    .doc(threadId)
+    .delete();
+}
