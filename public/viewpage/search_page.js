@@ -56,4 +56,100 @@ export async function search_page(joinedSearchKeys) {
   }
 
   Home.buildHomeScreen(threadList);
+
+  const table = document.getElementById("thread-table-body");
+  const editButtons = table.getElementsByClassName("form-edit-thread");
+  for (let i = 0; i < editButtons.length; i++) {
+    editButtons[i].addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const docId = e.target.docId.value;
+      let thread;
+      try {
+        thread = await FirebaseController.getOneThread(docId);
+        if (!thread) {
+          Util.info("getThreadById error", "No thread found by the id");
+          return;
+        }
+      } catch (e) {
+        if (Constant.DEV) console.log(e);
+        Util.info("getThreadById Error", JSON.stringify(e));
+        return;
+      }
+
+      Element.formEditThreadError.title.innerHTML = "";
+      Element.formEditThreadError.content.innerHTML = "";
+      Element.formEditThreadError.keywords.innerHTML = "";
+
+      Element.formEditThread.title.value = thread.title;
+      Element.formEditThread.keywords.value = thread.keywordsArray;
+      Element.formEditThread.content.value = thread.content;
+      Element.modalEditThread.show();
+
+      Element.formEditThread.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        thread.title = e.target.title.value;
+        thread.keywordsArray = e.target.keywords.value;
+        thread.content = e.target.content.value;
+
+        let valid = true;
+        let error = thread.validate_title();
+        if (error) {
+          valid = false;
+          Element.formEditThreadError.title.innerHTML = error;
+        }
+        error = thread.validate_keywords();
+        if (error) {
+          valid = false;
+          Element.formEditThreadError.keywords.innerHTML = error;
+        }
+        error = thread.validate_content();
+        if (error) {
+          valid = false;
+          Element.formEditThreadError.content.innerHTML = error;
+        }
+
+        if (!valid) return;
+
+        try {
+          await FirebaseController.updateThread(thread);
+          const tableThread = table.getElementsByClassName(
+            "table-row-" + thread.docId //add docId to make each thread id unique
+          )[0];
+          tableThread.getElementsByClassName("edit-thread-title")[0].innerHTML =
+            thread.title;
+          tableThread.getElementsByClassName(
+            "edit-thread-keywords"
+          )[0].innerHTML = thread.keywordsArray;
+          tableThread.getElementsByClassName(
+            "edit-thread-content"
+          )[0].innerHTML = thread.content;
+          Util.info(
+            "Update Success!",
+            "Thread Updated Successfully",
+            Element.modalEditThread
+          );
+        } catch (e) {
+          if (Constant.DEV) console.log(e);
+        }
+      });
+    });
+  }
+
+  const deleteButtons = table.getElementsByClassName("form-delete-thread");
+  for (let i = 0; i < deleteButtons.length; i++) {
+    deleteButtons[i].addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let docId = e.target.docId.value;
+      try {
+        await FirebaseController.deleteThread(docId);
+        const deleteReply = table.getElementsByClassName(
+          "table-row-" + docId
+        )[0];
+        deleteReply.remove();
+        Util.info("Delete Success!", "Thread Deleted Successfully");
+      } catch (e) {
+        if (Constant.DEV) console.log(e);
+      }
+    });
+  }
 }
