@@ -137,16 +137,40 @@ export async function home_page() {
       Element.formEditThreadError.content.innerHTML = "";
       Element.formEditThreadError.keywords.innerHTML = "";
 
+      const keysArray = thread.keywordsArray;
+      if (keysArray[0].includes(",")) {
+        const keysArr = keysArray[0].replaceAll(",", " ");
+        Element.formEditThread.keywords.value = keysArr;
+      } else {
+        Element.formEditThread.keywords.value = "";
+        for (let i = 0; i < keysArray.length; i++) {
+          // Element.formEditThread.keywords.value = "";
+          Element.formEditThread.keywords.value += keysArray[i] + " ";
+        }
+        // Element.formEditThread.keywords.value =
+        //   keysArray[0] + " " + keysArray[1] + " " + keysArray[2];
+      }
+
       Element.formEditThread.title.value = thread.title;
-      Element.formEditThread.keywords.value = thread.keywordsArray;
+      // Element.formEditThread.keywords.value = keysArray;
       Element.formEditThread.content.value = thread.content;
       Element.modalEditThread.show();
 
       Element.formEditThread.addEventListener("submit", async (e) => {
         e.preventDefault();
         thread.title = e.target.title.value;
-        thread.keywordsArray = e.target.keywords.value;
+        const keys = e.target.keywords.value.trim();
+        // thread.keywordsArray = e.target.keywords.value;
         thread.content = e.target.content.value;
+        const keywordsArray = keys.toLowerCase().match(/\S+/g);
+        thread.keywordsArray = keywordsArray;
+
+        let keyStr = "";
+        for (let i = 0; i < keywordsArray.length; i++) {
+          keyStr += keywordsArray[i] + " ";
+        }
+        thread.keywordsArray = keywordsArray;
+        // thread.keywordsArray = keywordsArray;
 
         let valid = true;
         let error = thread.validate_title();
@@ -176,7 +200,7 @@ export async function home_page() {
             thread.title;
           tableThread.getElementsByClassName(
             "edit-thread-keywords"
-          )[0].innerHTML = thread.keywordsArray;
+          )[0].innerHTML = keyStr;
           tableThread.getElementsByClassName(
             "edit-thread-content"
           )[0].innerHTML = thread.content;
@@ -332,16 +356,40 @@ function editThreadListener(thread) {
       Element.formEditThreadError.content.innerHTML = "";
       Element.formEditThreadError.keywords.innerHTML = "";
 
+      const keysArray = thread.keywordsArray;
+      if (keysArray[0].includes(",")) {
+        const keysArr = keysArray[0].replaceAll(",", " ");
+        Element.formEditThread.keywords.value = keysArr;
+      } else {
+        Element.formEditThread.keywords.value = "";
+        for (let i = 0; i < keysArray.length; i++) {
+          // Element.formEditThread.keywords.value = "";
+          Element.formEditThread.keywords.value += keysArray[i] + " ";
+        }
+        // Element.formEditThread.keywords.value =
+        //   keysArray[0] + " " + keysArray[1] + " " + keysArray[2];
+      }
+
       Element.formEditThread.title.value = thread.title;
-      Element.formEditThread.keywords.value = thread.keywordsArray;
+      // Element.formEditThread.keywords.value = keysArray;
       Element.formEditThread.content.value = thread.content;
       Element.modalEditThread.show();
 
       Element.formEditThread.addEventListener("submit", async (e) => {
         e.preventDefault();
         thread.title = e.target.title.value;
-        thread.keywordsArray = e.target.keywords.value;
+        const keys = e.target.keywords.value.trim();
+        // thread.keywordsArray = e.target.keywords.value;
         thread.content = e.target.content.value;
+        const keywordsArray = keys.toLowerCase().match(/\S+/g);
+        thread.keywordsArray = keywordsArray;
+
+        let keyStr = "";
+        for (let i = 0; i < keywordsArray.length; i++) {
+          keyStr += keywordsArray[i] + " ";
+        }
+        thread.keywordsArray = keywordsArray;
+        // thread.keywordsArray = keywordsArray;
 
         let valid = true;
         let error = thread.validate_title();
@@ -367,7 +415,7 @@ function editThreadListener(thread) {
           document.getElementById("one-title-" + docId).innerHTML =
             thread.title;
           document.getElementById("one-keywords-" + docId).innerHTML =
-            thread.keywordsArray;
+            thread.keyStr;
           document.getElementById("one-content-" + docId).innerHTML =
             thread.content;
           Util.info(
