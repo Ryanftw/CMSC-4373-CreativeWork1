@@ -137,6 +137,11 @@ export async function home_page() {
       Element.formEditThreadError.content.innerHTML = "";
       Element.formEditThreadError.keywords.innerHTML = "";
 
+      Element.formEditThread.title.value = thread.title;
+      Element.formEditThread.keywords.value = thread.keywordsArray;
+      Element.formEditThread.content.value = thread.content;
+      Element.modalEditThread.show();
+
       const keysArray = thread.keywordsArray;
       if (keysArray[0].includes(",")) {
         const keysArr = keysArray[0].replaceAll(",", " ");
@@ -144,15 +149,11 @@ export async function home_page() {
       } else {
         Element.formEditThread.keywords.value = "";
         for (let i = 0; i < keysArray.length; i++) {
-          // Element.formEditThread.keywords.value = "";
           Element.formEditThread.keywords.value += keysArray[i] + " ";
         }
-        // Element.formEditThread.keywords.value =
-        //   keysArray[0] + " " + keysArray[1] + " " + keysArray[2];
       }
 
       Element.formEditThread.title.value = thread.title;
-      // Element.formEditThread.keywords.value = keysArray;
       Element.formEditThread.content.value = thread.content;
       Element.modalEditThread.show();
 
@@ -160,7 +161,6 @@ export async function home_page() {
         e.preventDefault();
         thread.title = e.target.title.value;
         const keys = e.target.keywords.value.trim();
-        // thread.keywordsArray = e.target.keywords.value;
         thread.content = e.target.content.value;
         const keywordsArray = keys.toLowerCase().match(/\S+/g);
         thread.keywordsArray = keywordsArray;
@@ -170,7 +170,6 @@ export async function home_page() {
           keyStr += keywordsArray[i] + " ";
         }
         thread.keywordsArray = keywordsArray;
-        // thread.keywordsArray = keywordsArray;
 
         let valid = true;
         let error = thread.validate_title();
@@ -363,15 +362,11 @@ function editThreadListener(thread) {
       } else {
         Element.formEditThread.keywords.value = "";
         for (let i = 0; i < keysArray.length; i++) {
-          // Element.formEditThread.keywords.value = "";
           Element.formEditThread.keywords.value += keysArray[i] + " ";
         }
-        // Element.formEditThread.keywords.value =
-        //   keysArray[0] + " " + keysArray[1] + " " + keysArray[2];
       }
 
       Element.formEditThread.title.value = thread.title;
-      // Element.formEditThread.keywords.value = keysArray;
       Element.formEditThread.content.value = thread.content;
       Element.modalEditThread.show();
 
@@ -379,7 +374,6 @@ function editThreadListener(thread) {
         e.preventDefault();
         thread.title = e.target.title.value;
         const keys = e.target.keywords.value.trim();
-        // thread.keywordsArray = e.target.keywords.value;
         thread.content = e.target.content.value;
         const keywordsArray = keys.toLowerCase().match(/\S+/g);
         thread.keywordsArray = keywordsArray;
@@ -389,7 +383,6 @@ function editThreadListener(thread) {
           keyStr += keywordsArray[i] + " ";
         }
         thread.keywordsArray = keywordsArray;
-        // thread.keywordsArray = keywordsArray;
 
         let valid = true;
         let error = thread.validate_title();
@@ -414,8 +407,7 @@ function editThreadListener(thread) {
           await FirebaseController.updateThread(thread);
           document.getElementById("one-title-" + docId).innerHTML =
             thread.title;
-          document.getElementById("one-keywords-" + docId).innerHTML =
-            thread.keyStr;
+          document.getElementById("one-keywords-" + docId).innerHTML = keyStr;
           document.getElementById("one-content-" + docId).innerHTML =
             thread.content;
           Util.info(

@@ -85,11 +85,34 @@ export async function search_page(joinedSearchKeys) {
       Element.formEditThread.content.value = thread.content;
       Element.modalEditThread.show();
 
+      const keysArray = thread.keywordsArray;
+      if (keysArray[0].includes(",")) {
+        const keysArr = keysArray[0].replaceAll(",", " ");
+        Element.formEditThread.keywords.value = keysArr;
+      } else {
+        Element.formEditThread.keywords.value = "";
+        for (let i = 0; i < keysArray.length; i++) {
+          Element.formEditThread.keywords.value += keysArray[i] + " ";
+        }
+      }
+
+      Element.formEditThread.title.value = thread.title;
+      Element.formEditThread.content.value = thread.content;
+      Element.modalEditThread.show();
+
       Element.formEditThread.addEventListener("submit", async (e) => {
         e.preventDefault();
         thread.title = e.target.title.value;
-        thread.keywordsArray = e.target.keywords.value;
+        const keys = e.target.keywords.value.trim();
         thread.content = e.target.content.value;
+        const keywordsArray = keys.toLowerCase().match(/\S+/g);
+        thread.keywordsArray = keywordsArray;
+
+        let keyStr = "";
+        for (let i = 0; i < keywordsArray.length; i++) {
+          keyStr += keywordsArray[i] + " ";
+        }
+        thread.keywordsArray = keywordsArray;
 
         let valid = true;
         let error = thread.validate_title();
@@ -119,7 +142,7 @@ export async function search_page(joinedSearchKeys) {
             thread.title;
           tableThread.getElementsByClassName(
             "edit-thread-keywords"
-          )[0].innerHTML = thread.keywordsArray;
+          )[0].innerHTML = keyStr;
           tableThread.getElementsByClassName(
             "edit-thread-content"
           )[0].innerHTML = thread.content;
