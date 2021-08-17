@@ -264,13 +264,13 @@ function buildThreadView(thread) {
   Auth.currentUser.uid == thread.uid
     ? (html += `<form id="edit-thread-${
         thread.docId
-      }" class="form-edit-thread" method="post" style="display: inline-block;">
+      }" class="form-edit-thread" method="post">
                   <input type="hidden" name="docId" value="${thread.docId}">
                   <button type="submit" class="btn btn-outline-primary">Edit</button>
             </form>
             <form id="delete-thread-${
               thread.docId
-            }" class="form-delete-thread" method="post" style="display: inline-block;">
+            }" class="form-delete-thread" method="post">
                 <input type="hidden" name="docId" value="${thread.docId}">
                 <button type="submit" class="btn btn-outline-danger">Delete</button>
             </form>
