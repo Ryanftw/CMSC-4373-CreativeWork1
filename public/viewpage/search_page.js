@@ -102,6 +102,8 @@ export async function search_page(joinedSearchKeys) {
 
       Element.formEditThread.addEventListener("submit", async (e) => {
         e.preventDefault();
+        const button = e.target.getElementsByTagName("button")[0];
+        const label = Util.disableButton(button);
         thread.title = e.target.title.value;
         const keys = e.target.keywords.value.trim();
         thread.content = e.target.content.value;
@@ -146,6 +148,7 @@ export async function search_page(joinedSearchKeys) {
           tableThread.getElementsByClassName(
             "edit-thread-content"
           )[0].innerHTML = thread.content;
+          Util.enableButton(button, label);
           Util.info(
             "Update Success!",
             "Thread Updated Successfully",
@@ -162,13 +165,16 @@ export async function search_page(joinedSearchKeys) {
   for (let i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener("submit", async (e) => {
       e.preventDefault();
+      const button = e.target.getElementsByTagName("button")[0];
+      const label = Util.disableButton(button);
       let docId = e.target.docId.value;
       try {
         await FirebaseController.deleteThread(docId);
-        const deleteReply = table.getElementsByClassName(
+        const deleteThread = table.getElementsByClassName(
           "table-row-" + docId
         )[0];
-        deleteReply.remove();
+        Util.enableButton(button, label);
+        deleteThread.remove();
         Util.info("Delete Success!", "Thread Deleted Successfully");
       } catch (e) {
         if (Constant.DEV) console.log(e);

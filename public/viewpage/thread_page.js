@@ -90,6 +90,8 @@ export async function thread_page(threadId) {
   for (let i = 0; i < deleteForms.length; i++) {
     deleteForms[i].addEventListener("submit", async (e) => {
       e.preventDefault();
+      const button = e.target.getElementsByTagName("button")[0];
+      const label = Util.disableButton(button);
       let docId = e.target.docId.value;
       try {
         await FirebaseController.deleteReply(docId);
@@ -97,6 +99,7 @@ export async function thread_page(threadId) {
         const deleteReply = replyBody.getElementsByClassName(
           "one-reply-" + docId
         )[0];
+        Util.enableButton(button, label);
         deleteReply.remove();
         Util.info("Delete Success!", "Reply Deleted Successfully");
       } catch (e) {
@@ -127,6 +130,8 @@ export async function thread_page(threadId) {
 
       Element.formEditReply.addEventListener("submit", async (e) => {
         e.preventDefault();
+        const button = e.target.getElementsByTagName("button")[0];
+        const label = Util.disableButton(button);
         reply.content = e.target.reply.value;
         try {
           await FirebaseController.updateReply(reply);
@@ -134,6 +139,7 @@ export async function thread_page(threadId) {
           replyBody.getElementsByClassName(
             "reply-content-" + reply.docId
           )[0].innerHTML = reply.content;
+          Util.enableButton(button, label);
           Util.info(
             "Update Success!",
             "Reply Updated Successfully",

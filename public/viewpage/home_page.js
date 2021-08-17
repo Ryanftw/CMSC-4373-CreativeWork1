@@ -159,6 +159,8 @@ export async function home_page() {
 
       Element.formEditThread.addEventListener("submit", async (e) => {
         e.preventDefault();
+        const button = e.target.getElementsByTagName("button")[0];
+        const label = Util.disableButton(button);
         thread.title = e.target.title.value;
         const keys = e.target.keywords.value.trim();
         thread.content = e.target.content.value;
@@ -203,6 +205,7 @@ export async function home_page() {
           tableThread.getElementsByClassName(
             "edit-thread-content"
           )[0].innerHTML = thread.content;
+          Util.enableButton(button, label);
           Util.info(
             "Update Success!",
             "Thread Updated Successfully",
@@ -219,12 +222,15 @@ export async function home_page() {
   for (let i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener("submit", async (e) => {
       e.preventDefault();
+      const button = e.target.getElementsByTagName("button")[0];
+      const label = Util.disableButton(button);
       let docId = e.target.docId.value;
       try {
         await FirebaseController.deleteThread(docId);
         const deleteReply = table.getElementsByClassName(
           "table-row-" + docId
         )[0];
+        Util.enableButton(button, label);
         deleteReply.remove();
         Util.info("Delete Success!", "Thread Deleted Successfully");
       } catch (e) {
@@ -372,6 +378,8 @@ function editThreadListener(thread) {
 
       Element.formEditThread.addEventListener("submit", async (e) => {
         e.preventDefault();
+        const button = e.target.getElementsByTagName("button")[0];
+        const label = Util.disableButton(button);
         thread.title = e.target.title.value;
         const keys = e.target.keywords.value.trim();
         thread.content = e.target.content.value;
@@ -410,6 +418,7 @@ function editThreadListener(thread) {
           document.getElementById("one-keywords-" + docId).innerHTML = keyStr;
           document.getElementById("one-content-" + docId).innerHTML =
             thread.content;
+          Util.enableButton(button, label);
           Util.info(
             "Update Success!",
             "Thread Updated Successfully",
@@ -428,6 +437,8 @@ function deleteThreadListener(thread) {
   const deleteThread = document.getElementById("delete-thread-" + thread.docId);
   deleteThread.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const button = e.target.getElementsByTagName("button")[0];
+    const label = Util.disableButton(button);
     let docId = e.target.docId.value;
     try {
       await FirebaseController.deleteThread(docId);
@@ -437,6 +448,7 @@ function deleteThreadListener(thread) {
       document.getElementById("one-timestamp-" + docId).remove();
       document.getElementById("one-email-" + docId).remove();
       document.getElementById("one-content-" + docId).remove();
+      Util.enableButton(button, label);
       Util.info("Delete Success!", "Thread Deleted Successfully");
     } catch (e) {
       if (Constant.DEV) console.log(e);
