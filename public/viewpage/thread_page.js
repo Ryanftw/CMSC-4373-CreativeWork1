@@ -5,7 +5,6 @@ import * as Util from "./util.js";
 import * as Constant from "../model/constant.js";
 import { Reply } from "../model/reply.js";
 import * as Route from "../controller/route.js";
-import * as Edit from "../controller/edit_reply.js";
 
 export function addViewButtonListeners() {
   const viewButtonForms = document.getElementsByClassName("thread-view-form");
